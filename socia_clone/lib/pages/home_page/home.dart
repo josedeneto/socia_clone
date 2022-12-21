@@ -107,7 +107,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   Icon(
                                     Icons.shopping_cart_outlined,
                                     size: 25,
-                                  ), SizedBox(width: 5,),
+                                  ), SizedBox(width: 3,),
                                   Icon(
                                     Icons.notifications_none_rounded,
                                     size: 25,
