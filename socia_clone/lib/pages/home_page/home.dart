@@ -102,12 +102,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           child: Stack(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: const [
                                   Icon(
                                     Icons.shopping_cart_outlined,
                                     size: 25,
-                                  ),
+                                  ), SizedBox(width: 5,),
                                   Icon(
                                     Icons.notifications_none_rounded,
                                     size: 25,
