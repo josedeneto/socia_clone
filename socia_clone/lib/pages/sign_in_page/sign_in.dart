@@ -55,19 +55,15 @@ class _SignInState extends State<SignIn> {
                       Observer(
                         builder: (_) {
                           return CustomizeTextFormField(
+                            maxLenght: 9,
                             enable: !isLoading,
-                            onChanged: _signController.setEmail,
+                            onChanged: _signController.setNumberPhone,
                             prefixIcon: Icons.email_outlined,
                             controller: _emailController,
-                            keyBoardType: TextInputType.emailAddress,
-                            label: 'E-mail',
-                            hintText: 'informe o seu E-mail',
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Por favor informe e-mail';
-                              }
-                              return null;
-                            },
+                            keyBoardType: TextInputType.number,
+                            label: 'Telefone',
+                            hintText: 'informe o seu telefone',
+                            validator: _signController.validateNumberPhone
                           );
                         },
                       ),
@@ -83,16 +79,11 @@ class _SignInState extends State<SignIn> {
                               onTap: _signController.togglePasswordVisible),
                           prefixIcon: Icons.lock_outline_rounded,
                           controller: _passwordController,
-                          keyBoardType: TextInputType.number,
+                          keyBoardType: TextInputType.text,
                           obscureText: !_signController.passwordVisible,
                           label: 'Senha',
-                          hintText: 'Informe senha com 6 dígitos',
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Por favor informe um código';
-                            }
-                            return null;
-                          },
+                          hintText: 'Informe senha com pelo menos 6 dígitos',
+                          validator:_signController.validatePassword
                         );
                       }),
                       const SizedBox(height: 10),
@@ -101,8 +92,6 @@ class _SignInState extends State<SignIn> {
                         child: CustomizeTextButton(
                             text: 'Esqueceu a senha?',
                             onPressed: () {
-                              Navigator.pushNamed(
-                                  context, '/forgot_acess_code');
                             }),
                       ),
                       const SizedBox(height: 10),
@@ -136,7 +125,9 @@ class _SignInState extends State<SignIn> {
                                   _passwordController.clear();
                                 }
                                 else {
-                                  
+                                   setState(() {
+                                    isLoading = false;
+                                  });
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       backgroundColor: AppColors.red,
@@ -157,11 +148,10 @@ class _SignInState extends State<SignIn> {
                       CustomizeOutlineButton(
                           textButton: 'Criar conta',
                           onPressed: () {
-                            Navigator.pushNamed(context, '/signUp');
                           }),
                     ],
                   ),
-                )),
+                ),),
           ),
         ),
       ),

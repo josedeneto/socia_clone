@@ -6,23 +6,23 @@ class SignInController = _SignInController with _$SignInController;
 
 abstract class _SignInController with Store{
  @observable 
- String email = '';
+ String numberPhone = '';
  @observable
  String password = '';
  @observable
  bool passwordVisible = false;
 
  @action 
-  void setEmail(String value)=>email=value;
+  void setNumberPhone(String value)=>numberPhone=value;
   
  @action
-  void setPassword(String value)=>email = value;
+  void setPassword(String value)=>password = value;
   
 
   @action
-  String? validateEmail(String? value) {
+  String? validateNumberPhone(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Por favor informe um e-mail';
+      return 'Por favor informe um número de telefone';
     }
     return null;
   }
@@ -37,12 +37,12 @@ abstract class _SignInController with Store{
   void togglePasswordVisible()=> passwordVisible = !passwordVisible;
 
   @computed 
-  bool get isPasswordValid => password.length==4;
+  bool get isPasswordValid => password.length>=4;
 
   @computed
-  bool get isEmailValid => RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+  bool get isNumberPhoneValid=> numberPhone.length==9;
 
   @computed 
-  bool get isFormValid => isEmailValid && isPasswordValid;
+  bool get isFormValid => isNumberPhoneValid && isPasswordValid;
 
 }

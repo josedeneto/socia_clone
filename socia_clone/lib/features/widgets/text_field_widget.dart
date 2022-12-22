@@ -33,34 +33,32 @@ class CustomizeTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: SizedBox(
-        height: 50,
-        child: TextFormField(
-          maxLength:maxLenght,  
-          enabled: enable,
-          controller:controller ,  
-          onChanged: onChanged,
-          validator: validator,
-          keyboardType: keyBoardType,
-          obscureText: obscureText,
-          decoration: InputDecoration(
-            counterText: '',
-            isDense: true,
-            suffix: suffix,
-            prefixIcon: Icon(prefixIcon),
-              label: Text(label),
-              hintText: hintText,
-              fillColor: Colors.grey.shade100,
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color:AppColors.primaryColor)
-              ),
-              ),
-        ),
+      child: TextFormField(
+        maxLength:maxLenght,  
+        enabled: enable,
+        controller:controller ,  
+        onChanged: onChanged,
+        validator: validator,
+        keyboardType: keyBoardType,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(10),
+          counterText: '',
+          isDense: true,
+          suffix: suffix,
+          prefixIcon: Icon(prefixIcon),
+            label: Text(label),
+            hintText: hintText,
+            fillColor: Colors.grey.shade100,
+            filled: true,
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color:AppColors.primaryColor)
+            ),
+            ),
       ),
     );
   }

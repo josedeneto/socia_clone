@@ -16,13 +16,13 @@ mixin _$SignInController on _SignInController, Store {
       (_$isPasswordValidComputed ??= Computed<bool>(() => super.isPasswordValid,
               name: '_SignInController.isPasswordValid'))
           .value;
-  Computed<bool>? _$isEmailValidComputed;
+  Computed<bool>? _$isNumberPhoneValidComputed;
 
   @override
-  bool get isEmailValid =>
-      (_$isEmailValidComputed ??= Computed<bool>(() => super.isEmailValid,
-              name: '_SignInController.isEmailValid'))
-          .value;
+  bool get isNumberPhoneValid => (_$isNumberPhoneValidComputed ??=
+          Computed<bool>(() => super.isNumberPhoneValid,
+              name: '_SignInController.isNumberPhoneValid'))
+      .value;
   Computed<bool>? _$isFormValidComputed;
 
   @override
@@ -31,19 +31,19 @@ mixin _$SignInController on _SignInController, Store {
               name: '_SignInController.isFormValid'))
           .value;
 
-  late final _$emailAtom =
-      Atom(name: '_SignInController.email', context: context);
+  late final _$numberPhoneAtom =
+      Atom(name: '_SignInController.numberPhone', context: context);
 
   @override
-  String get email {
-    _$emailAtom.reportRead();
-    return super.email;
+  String get numberPhone {
+    _$numberPhoneAtom.reportRead();
+    return super.numberPhone;
   }
 
   @override
-  set email(String value) {
-    _$emailAtom.reportWrite(value, super.email, () {
-      super.email = value;
+  set numberPhone(String value) {
+    _$numberPhoneAtom.reportWrite(value, super.numberPhone, () {
+      super.numberPhone = value;
     });
   }
 
@@ -83,11 +83,11 @@ mixin _$SignInController on _SignInController, Store {
       ActionController(name: '_SignInController', context: context);
 
   @override
-  void setEmail(String value) {
+  void setNumberPhone(String value) {
     final _$actionInfo = _$_SignInControllerActionController.startAction(
-        name: '_SignInController.setEmail');
+        name: '_SignInController.setNumberPhone');
     try {
-      return super.setEmail(value);
+      return super.setNumberPhone(value);
     } finally {
       _$_SignInControllerActionController.endAction(_$actionInfo);
     }
@@ -105,11 +105,11 @@ mixin _$SignInController on _SignInController, Store {
   }
 
   @override
-  String? validateEmail(String? value) {
+  String? validateNumberPhone(String? value) {
     final _$actionInfo = _$_SignInControllerActionController.startAction(
-        name: '_SignInController.validateEmail');
+        name: '_SignInController.validateNumberPhone');
     try {
-      return super.validateEmail(value);
+      return super.validateNumberPhone(value);
     } finally {
       _$_SignInControllerActionController.endAction(_$actionInfo);
     }
@@ -140,11 +140,11 @@ mixin _$SignInController on _SignInController, Store {
   @override
   String toString() {
     return '''
-email: ${email},
+numberPhone: ${numberPhone},
 password: ${password},
 passwordVisible: ${passwordVisible},
 isPasswordValid: ${isPasswordValid},
-isEmailValid: ${isEmailValid},
+isNumberPhoneValid: ${isNumberPhoneValid},
 isFormValid: ${isFormValid}
     ''';
   }
