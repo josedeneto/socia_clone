@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:socia_clone/core/app_colors.dart';
 import 'package:socia_clone/core/app_typography.dart';
-import 'package:socia_clone/core/pointer_tab.dart';
 
 import 'package:socia_clone/pages/home_page/components/item_tile.dart';
 import 'package:socia_clone/repositories/category_repository.dart';
@@ -185,11 +184,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ),
 const SizedBox(height: 10,),
                   SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 200,
                           child: Card(

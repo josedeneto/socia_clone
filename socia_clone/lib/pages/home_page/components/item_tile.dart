@@ -85,9 +85,9 @@ class ItemTile extends StatelessWidget {
                     bottomRight: Radius.circular(20),
                     topLeft: Radius.circular(10)),
               ),
-              child:Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: const Image(color: Colors.white,image: AssetImage('assets/images/logo_socia/4.png'), width:5, height: 5,),
+              child:const Padding(
+                padding:  EdgeInsets.only(left: 10),
+                child:  Image(color: Colors.white,image: AssetImage('assets/images/logo_socia/4.png'), width:5, height: 5,),
               ) /*Icon(
                 Icons.shopping_bag_outlined,
                 color: Colors.white.withAlpha(200),
