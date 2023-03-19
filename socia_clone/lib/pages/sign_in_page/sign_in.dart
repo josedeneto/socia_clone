@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:socia_clone/commom_widgets/customize_text_button.dart';
 
-import '../../commom_widgets/customize_button.dart';
+import '../../commom_widgets/custom_loading_button.dart';
 import '../../commom_widgets/customize_icon_button.dart';
-import '../../commom_widgets/customize_outline_button.dart';
-import '../../commom_widgets/customize_text_button.dart';
 import '../../controllers/signin_controller.dart';
 import '../../core/app_colors.dart';
-import '../../features/widgets/text_field_widget.dart';
+import '../../commom_widgets/text_field_widget.dart';
 import '../home_page/home.dart';
+import 'components/forgot_password.dart';
+import 'components/logo_component.dart';
+import 'components/social_button_tile.dart';
+import 'components/welcome_message.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -19,11 +23,32 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   bool isLoading = false;
-
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _cNumberPhone = TextEditingController();
+  final _cPassword = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _signController = SignInController();
+
+  @override
+  void initState() {
+    updateAppbar();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _cNumberPhone.dispose();
+    _cPassword.dispose();
+    super.dispose();
+  }
+
+  void updateAppbar() {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,123 +60,114 @@ class _SignInState extends State<SignIn> {
             reverse: true,
             physics: const BouncingScrollPhysics(),
             child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 25),
-                        child: const Image(
-                          image:
-                              AssetImage('assets/images/logo_socia/logo.png'),
-                          width: 50,
-                          height: 50,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const LogoComponent(),
+                    const SizedBox(height: 25),
+                    const WelcomeMessage(),
+                    const SizedBox(height: 20),
+                    Column(
+                      children: [
+                        Observer(
+                          builder: (_) {
+                            return CustomizeTextFormField(
+                              maxLenght: 9,
+                              enable: !isLoading,
+                              onChanged: _signController.setNumberPhone,
+                              prefixIcon: Icons.phone_android_outlined,
+                              controller: _cNumberPhone,
+                              keyBoardType: TextInputType.number,
+                              label: 'Telefone',
+                              validator: _signController.validateNumberPhone,
+                            );
+                          },
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      Observer(
-                        builder: (_) {
-                          return CustomizeTextFormField(
-                            maxLenght: 9,
-                            enable: !isLoading,
-                            onChanged: _signController.setNumberPhone,
-                            prefixIcon: Icons.email_outlined,
-                            controller: _emailController,
-                            keyBoardType: TextInputType.number,
-                            label: 'Telefone',
-                            hintText: 'informe o seu telefone',
-                            validator: _signController.validateNumberPhone
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 2),
-                      Observer(builder: (_) {
-                        return CustomizeTextFormField(
-                          enable: !isLoading,
-                          onChanged: _signController.setPassword,
-                          suffix: CustomizeIconButton(
-                              icon: !_signController.passwordVisible
-                                  ? Icons.visibility_rounded
-                                  : Icons.visibility_off_outlined,
-                              onTap: _signController.togglePasswordVisible),
-                          prefixIcon: Icons.lock_outline_rounded,
-                          controller: _passwordController,
-                          keyBoardType: TextInputType.text,
-                          obscureText: !_signController.passwordVisible,
-                          label: 'Senha',
-                          hintText: 'Informe senha com pelo menos 6 dígitos',
-                          validator:_signController.validatePassword
-                        );
-                      }),
-                      const SizedBox(height: 10),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: CustomizeTextButton(
-                            text: 'Esqueceu a senha?',
-                            onPressed: () {
-                            }),
-                      ),
-                      const SizedBox(height: 10),
-                      Observer(
-                        builder: (_) {
-                          return CustomizeButton(
-                              onTextLoad: 'Entrando...',
-                              textButton: 'Entrar',
-                              isLoading: isLoading,
-                              onPressed: () {
-                               final valid = _formKey.currentState!.validate();
-                                if (valid) {
-                                  setState(() {
-                                    isLoading = true;
-                                  });
-
-                                  Future.delayed(const Duration(seconds: 2))
-                                      .then(
-                                    (value) => Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => const Home(),
-                                      ),
-                                    ),
-                                  );
-                                } 
-                                else if(!valid){
-                                  setState(() {
-                                    isLoading = false;
-                                  });
-                                  _passwordController.clear();
-                                }
-                                else {
-                                   setState(() {
-                                    isLoading = false;
-                                  });
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      backgroundColor: AppColors.red,
-                                      content: Text(
-                                        'E-mail ou senha inválidos',
-                                        style:
-                                            TextStyle(color: AppColors.white),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              });
-                        },
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      CustomizeOutlineButton(
-                          textButton: 'Criar conta',
+                        Observer(
+                          builder: (_) {
+                            return CustomizeTextFormField(
+                              enable: !isLoading,
+                              onChanged: _signController.setPassword,
+                              suffix: CustomizeIconButton(
+                                icon: !_signController.passwordVisible
+                                    ? Icons.visibility_rounded
+                                    : Icons.visibility_off_outlined,
+                                onTap: _signController.togglePasswordVisible,
+                              ),
+                              prefixIcon: Icons.lock_outline_rounded,
+                              controller: _cPassword,
+                              keyBoardType: TextInputType.text,
+                              obscureText: !_signController.passwordVisible,
+                              label: 'Palavra-passe',
+                              validator: _signController.validatePassword,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    const ForgotPassword(),
+                    const SizedBox(height: 10),
+                    Observer(
+                      builder: (_) {
+                        return CustomLoadingButton(
+                          onTextLoad: 'Entrando...',
+                          textButton: 'Entrar',
+                          isLoading: isLoading,
                           onPressed: () {
-                          }),
-                    ],
-                  ),
-                ),),
+                            final valid = _formKey.currentState!.validate();
+                            if (valid) {
+                              setState(() {
+                                isLoading = true;
+                              });
+
+                              Future.delayed(const Duration(seconds: 2)).then(
+                                (value) => Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const Home(),
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      children: const [
+                        Expanded(
+                          child: Divider(thickness: 0.5),
+                        ),
+                        Text(' Ou continue com '),
+                        Expanded(
+                          child: Divider(thickness: 0.5),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        SocialButtonTile(
+                            imagePath: 'assets/images/social/google.png'),
+                        SizedBox(width: 20),
+                        SocialButtonTile(
+                            imagePath: 'assets/images/social/apple.png'),
+                      ],
+                    ),
+                    const SizedBox(width: 10),
+                    CustomizeTextButton(
+                      text: 'Criar conta',
+                      onPressed: () {},
+                    )
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),

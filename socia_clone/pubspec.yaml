@@ -65,6 +65,7 @@ flutter:
      - assets/images/recents_products/
      - assets/images/promotion/
      - assets/images/clients/
+     - assets/images/social/
 
   fonts:
     - family: Martel Sans

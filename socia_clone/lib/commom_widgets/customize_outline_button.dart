@@ -18,7 +18,7 @@ class CustomizeOutlineButton extends StatelessWidget {
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           primary: AppColors.primaryColor,
-          elevation:0,
+          elevation: 0,
           side: const BorderSide(
             color: AppColors.primaryColor,
           ),
@@ -27,7 +27,9 @@ class CustomizeOutlineButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Text(textButton),
+        child: Text(
+          textButton,
+        ),
       ),
     );
   }

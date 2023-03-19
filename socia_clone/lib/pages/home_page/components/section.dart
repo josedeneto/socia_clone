@@ -25,7 +25,12 @@ class Section extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(titleSection, style: AppTypography.bodyTextBold(context)),
+              Text(
+                titleSection,
+                style: AppTypography.bodyTextBold(context)!.copyWith(
+                  fontSize: 14
+                ),
+              ),
               Text(
                 subtitleSection,
                 style: AppTypography.subtitleSection(context),
@@ -34,7 +39,10 @@ class Section extends StatelessWidget {
           ),
           TextButton(
             onPressed: onTap,
-            child: Text(showAll, style: AppTypography.showAll(context)),
+            child: Text(
+              showAll,
+              style: AppTypography.showAll(context),
+            ),
           )
         ],
       ),

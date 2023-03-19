@@ -24,8 +24,9 @@ class AppTypography {
   static TextStyle? showAll(BuildContext context) {
     return Theme.of(context).textTheme.bodyText1!.copyWith(
           fontSize: 12,
-          fontWeight: FontWeight.w500,
-          color: Colors.black,
+          fontWeight: FontWeight.w300,
+          color: Colors.black87,
+          decoration: TextDecoration.underline
         );
   }
 
@@ -67,9 +68,9 @@ class AppTypography {
         );
   }
 
-  static TextStyle? myLocationTet(BuildContext context) {
+  static TextStyle? myLocationText(BuildContext context) {
     return Theme.of(context).textTheme.bodyText1!.copyWith(
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w900,
           fontSize: 12,
           color: AppColors.defaultBlack87,
         );
